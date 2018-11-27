@@ -1,0 +1,53 @@
+<div class="container-fluid" style="background-color:#393e46;height:-webkit-fill-available;">
+  <div class="row">
+    <div class="col-3 col-md-4 ">
+    </div>
+    <div class="col-6 col-md-4 mt-5" style="padding-top:5rem;">
+      <mdb-card>
+  <!--Card image-->
+  <mdb-card-body>
+
+    <!--Title-->
+    <mdb-card-title class="text-center"> <h4>Login Form</h4> </mdb-card-title>
+      <hr class="mb-5 mt-5 pb-3">
+    <!--Text-->
+    <mdb-card-text>
+      <form class="needs-validation" novalidate [formGroup]="loginForm">
+      <div class="md-form mb-5">
+         <i class="fa fa-envelope prefix"></i>
+        <input mdbInputDirective data-error="wrong email" formControlName="email" data-success="valid email" minLength="8" maxLength="25"
+     type="email" class="form-control" id="form9" name="email" mdbInputDirective>
+   <label for="form9">Type your e-mail</label>
+        </div>
+
+        <div class="md-form mb-4">
+          <i class="fa fa-lock prefix"></i>
+      <input mdbInputDirective data-error="wrong password" formControlName="password" data-success="valid password" minLength="10"
+        maxLength="25" type="password" class="form-control" id="form10" name="password">
+      <label for="form10">Type your password</label>
+        </div>
+
+  <label>Please select your Type</label>
+        <!-- Default inline 1-->
+        <div class="custom-control custom-radio custom-control-inline mt-5">
+          <input type="radio" class="custom-control-input" id="defaultInline1" name="loginType" value="Reporter" formControlName="loginType" mdbInputDirective>
+          <label class="custom-control-label" for="defaultInline1">Reporter</label>
+        </div>
+
+        <!-- Default inline 2-->
+        <div class="custom-control custom-radio custom-control-inline mt-5">
+          <input type="radio" class="custom-control-input" id="defaultInline2" name="loginType" value="Admin" formControlName="loginType" mdbInputDirective>
+          <label class="custom-control-label" for="defaultInline2">Admin</label>
+        </div>
+      </form>
+    </mdb-card-text>
+    <div class="text-center">
+    <button mdbBtn  color="blue-grey" class="text-center" outline="true" mdbWavesEffect (click)="login()">Login</button>
+  </div>
+  </mdb-card-body>
+</mdb-card>
+    </div>
+    <div class="col-3 col-md-4">
+    </div>
+  </div>
+</div>
