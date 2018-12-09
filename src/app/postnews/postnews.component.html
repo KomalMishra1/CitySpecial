@@ -45,9 +45,9 @@
       <!-- <input type="file" id="file"  class="form-control-file"  name="file"
          mutiple ng2FileSelect [uploader]="uploader"/>
   <label for="file" class="btn-2">Choose File</label> -->
-   <input type="file" id="photo"  class="form-control-file" accept=".jpg , .png"
+   <input type="file" id="newsImage" name="newsImage"  class="form-control-file" accept=".jpg , .png"
    mutiple ng2FileSelect [uploader]="uploader" />
-<label for="photo" class="btn-2">Choose File</label>
+<label for="newsImage" class="btn-2">Choose File</label>
   <div class="col-md-12">
           <div class="row" *ngFor="let item of uploader.queue">
         <div class="col-md-4 mt-3">
@@ -68,6 +68,7 @@
   <div class="row" *ngIf="uploader?.queue?.length > 1">
   <button type="button" class="btn btn-sm  btn-dark float-right" (click)="uploader.uploadAll();">upload All</button>
   </div>
+  <p *ngIf=showUrl >image url : {{this.postNewsForm.value.imageUrl}}</p>
       </form>
     </mdb-card-text>
     <div class="text-center">
@@ -78,7 +79,7 @@
 <!-- <button type="button" mdbBtn color="primary" rounded="true"  data-toggle="modal" data-target="#basicExample" (click)="frame.show()"
   mdbWavesEffect>Launch Modal</button> -->
 
-<div mdbModal #frame="mdbModal" class="modal fade" id="frameModalTop" tabindex="-1" role="dialog" *ngIf="showSuccesModal" aria-labelledby="myModalLabel"
+<div mdbModal #frame="mdbModal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" *ngIf="showSuccesModal" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-notify modal-success" role="document">
     <!--Content-->

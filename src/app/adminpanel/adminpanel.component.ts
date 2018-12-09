@@ -69,7 +69,10 @@ logout() {
 }
 }
 viewReporter(){
+this._router.navigate(['/reporterlist']);
+}
+ViewAllReporter(){
+this._router.navigate(['/reporterlist']);
 
 }
-ViewAllReporter(){}
 }

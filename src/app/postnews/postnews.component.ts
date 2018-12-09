@@ -3,8 +3,13 @@ import { FormGroup,FormControl, Validators,ReactiveFormsModule } from '@angular/
 import {Router} from '@angular/router';
 import {FileUploader, FileSelectDirective } from 'ng2-file-upload';
 import {AppserviceService} from '../appservice.service';
+import {HttpClient , HttpHeaders  , HttpResponse} from '@angular/common/http';
+import 'rxjs';
+import {Subject} from 'rxjs';
+import {Observable} from 'rxjs';
 
-const uri="";
+const uri="https://cityspecial.herokuapp.com/api/reporter/uploadImage";
+
 
 @Component({
   selector: 'app-postnews',
@@ -25,22 +30,47 @@ attachmentList : any = [];
 showMessage : boolean =false;
 descriptionArray:any=[];
 showSuccesModal:boolean=false;
+token:any;
+showUrl:boolean = false;
 
-uploader : FileUploader = new FileUploader({url : uri});
+uploader : FileUploader = new FileUploader({url : uri , itemAlias : 'newsImage' , authToken : this.token});
 
   constructor(private _fileservice : AppserviceService) {
+    if(sessionStorage.length > 0){
+        for (let i = 0; i < sessionStorage.length; i++){
+          let key = sessionStorage.key(i);
+          let value = sessionStorage.getItem(key);
+          this.getToken(value);
+          console.log(key, value);
+          console.log("teoken" , this.token);
+          }
+        }
+    this.uploader.authToken = this.token;
+    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
     this.uploader.onCompleteItem = (item : any , response : any , status : any , headers : any) => {
+      console.log(this.uploader);
         console.log('ImageUpload:uploaded:', item, status, response);
            this.attachmentList.push(JSON.parse(response)); //gives response in attachment list array
           console.log(this.attachmentList);
-          if(this.attachmentList.status == 201){
+          if(this.attachmentList[0].status == 201 ||  this.attachmentList[0].status == 200){
             console.log("succesfull Response");
-              this.postNewsForm.value.imageUrl=this.attachmentList.imageUrl;
+              this.postNewsForm.value.imageUrl=this.attachmentList[0].imageUrl;
+              console.log("image url " , this.postNewsForm.value.imageUrl);
+              this.showUrl=true;
           }
         }
 }
 
   ngOnInit() {
+  }
+
+  getToken(value)
+  {
+    let val = JSON.parse(value);
+    console.log("in method" , typeof(val));
+    console.log("token" , val.token);
+    this.token = val.token;
+
   }
 
   checkNoOfWords(event){
@@ -69,7 +99,7 @@ uploader : FileUploader = new FileUploader({url : uri});
         err => console.log(err));
   }
   checkSuccess(response){
-    if(response.success = 200) {
+    if(response.success == 200 || response.success == 201) {
       this.showSuccesModal = true;
       console.log(this.showSuccesModal);
     }

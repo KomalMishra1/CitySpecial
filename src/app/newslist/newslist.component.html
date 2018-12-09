@@ -5,40 +5,19 @@
 
 
       <nav class="nav flex-column py-4 mb-r pl-3 font-weight-bold z-depth-1">
-        <h5><a class="dark-grey-text font-weight-bold" href="#">View Profile</a></h5>
+        <h5><a class="dark-grey-text font-weight-bold" href="#">Quick Links</a></h5>
         <hr>
-        <a class="nav-link mt-4"  routerLink="/createreporter"  routerLinkActive="active">Create Reporter</a>
-        <a class="nav-link mt-4" routerLink="/"  routerLinkActive="active">Fetch News</a>
-        <a class="nav-link mt-4"  routerLink="/newslist" routerLinkActive="active">Fetch All News</a>
-          <a class="nav-link mt-4" href="#" routerLink="/postnews" routerLinkActive="active">Upload News</a>
-          <a class="nav-link mt-4" routerLink="/newslist" routerLinkActive="active">Modify News Status</a>
-          <a class="nav-link mt-4" href="#" (click)="viewReporter()">View Reporter</a>
-          <a class="nav-link mt-4"  (click)="ViewAllReporter()">View All Reporter</a>
-            <!-- <a class="nav-link mt-4" href="#" (click)="entertainment()">Entertainment</a> -->
+        <a class="nav-link active red-text"  (click)="all()">All</a>
+        <a class="nav-link mt-4"   (click)="food(t)">Food</a>
+        <a class="nav-link mt-4"  (click)="sports()">Sports</a>
+        <a class="nav-link mt-4"  (click)="bussiness()">Business</a>
+          <a class="nav-link mt-4"  (click)="politics()">Politics</a>
+            <a class="nav-link mt-4"  (click)="entertainment()">Entertainment</a>
       </nav>
 </div>
   <div class="col-10">
 
 <div class="container jumbotron">
-  <mdb-card class="mt-5">
-    <!--Card content-->
-    <mdb-card-body>
-
-      <!--Title-->
-      <mdb-card-title>
-        <h4>Hi! {{data.detail.adminName}}</h4>
-      </mdb-card-title>
-
-      <!--Text-->
-      <mdb-card-text> Some quick example text to build on the card title and make up the bulk of the card's
-        content.
-      </mdb-card-text>
-
-      <a href="#" mdbBtn color="primary" (click) = "logout()" mdbWavesEffect>logout</a>
-    </mdb-card-body>
-  </mdb-card>
-
-  <h5>Posted by you</h5>
   <div class="row mb-5 pt-5"  *ngFor="let data of data">
 
       <!--Grid column-->
@@ -68,8 +47,48 @@
           <p>by
               <a>
                   <strong>Carine Fox</strong>
-              </a>, 19/08/2018</p>
-          <a mdbBtn color="success" class="mb-3 waves-light" mdbWavesEffect>Read more</a>
+              </a>,{{data.createdOn}}</p>
+          <a mdbBtn color="success" class="mb-3 waves-light mr-5" mdbWavesEffect>Read more</a>
+          <div *ngIf="data.isVerified == true ; then displaycheck else displaycross"></div>
+              <ng-template #displaycheck> <img src = "../assets/images/check.png">Approved</ng-template>
+              <ng-template #displaycross><img src = "../assets/images/cancel.png" (click)="modifyNewsStatus(data._id)" data-toggle="modal" data-target="#basicExample">
+                Not Approved Click to approve
+                <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                  *ngIf = "showSuccessModal" aria-hidden="true">
+                  <div class="modal-dialog modal-notify modal-success" role="document">
+                    <!--Content-->
+                    <div class="modal-content">
+                      <!--Header-->
+                      <div class="modal-header">
+                        <p class="heading lead">Modal Success</p>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+                          <span aria-hidden="true" class="white-text">&times;</span>
+                        </button>
+                      </div>
+
+                      <!--Body-->
+                      <div class="modal-body">
+                        <div class="text-center">
+                          <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit iusto nulla aperiam blanditiis ad consequatur
+                            in dolores culpa, dignissimos, eius non possimus fugiat. Esse ratione fuga, enim, ab officiis totam.</p>
+                        </div>
+                      </div>
+
+                      <!--Footer-->
+                      <div class="modal-footer justify-content-center">
+                        <a type="button" mdbBtn color="success" class="waves-effect" mdbWavesEffect>Get it now
+                          <i class="fa fa-diamond ml-1"></i>
+                        </a>
+                        <a type="button" mdbBtn color="success" outline="true" class="waves-effect" mdbWavesEffect (click)="frame.hide()">No, thanks</a>
+                      </div>
+                    </div>
+                    <!--/.Content-->
+                  </div>
+                </div>
+              </ng-template>
+
       </div>
       <!--Grid column-->
 

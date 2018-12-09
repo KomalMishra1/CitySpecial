@@ -18,6 +18,8 @@ import {AppserviceService} from './appservice.service';
 import { ReporterloginComponent } from './reporterlogin/reporterlogin.component';
 import { ReporterlistComponent } from './reporterlist/reporterlist.component';
 import { ReporterprofileComponent } from './reporterprofile/reporterprofile.component';
+import { NewslistComponent } from './newslist/newslist.component';
+import { CreatereporterComponent } from './createreporter/createreporter.component';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { ReporterprofileComponent } from './reporterprofile/reporterprofile.comp
     PostnewsComponent,
     ReporterloginComponent,
     ReporterlistComponent,
-    ReporterprofileComponent
+    ReporterprofileComponent,
+    NewslistComponent,
+    CreatereporterComponent
 
   ],
   imports: [
