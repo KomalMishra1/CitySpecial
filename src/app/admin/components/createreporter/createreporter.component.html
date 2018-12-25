@@ -1,0 +1,198 @@
+<div class="container-fluid" style="height:-webkit-fill-available;">
+  <div class="row">
+    <div class="col-3 col-md-2" style="padding-top:5rem;">
+      <nav class="nav flex-column py-4 mb-r pl-3 font-weight-bold z-depth-1">
+        <a class="dark-grey-text font-weight-bold">Quick Links</a>
+        <a class="nav-link mt-4"  routerLink="/createreporter"  routerLinkActive="active">Create Reporter</a>
+        <a class="nav-link mt-4" routerLink="/"  routerLinkActive="active">Fetch News</a>
+        <a class="nav-link mt-4"  routerLink="/newslist" routerLinkActive="active">Fetch All News</a>
+          <a class="nav-link mt-4"  routerLink="/postnews" routerLinkActive="active">Upload News</a>
+          <a class="nav-link mt-4" routerLink="/newslist" routerLinkActive="active">Modify News Status</a>
+          <a class="nav-link mt-4"  (click)="viewReporter()">View Reporter</a>
+          <a class="nav-link mt-4"  (click)="ViewAllReporter()" routerLinkActive="active">View All Reporter</a>
+            <!-- <a class="nav-link mt-4" href="#" (click)="entertainment()">Entertainment</a> -->
+      </nav>
+    </div>
+    <div class="col-8 col-md-8" style="padding-top:5rem;">
+      <mdb-card>
+  <!--Card image-->
+  <mdb-card-body>
+
+    <!--Title-->
+  <mdb-card-title class="text-center">
+    <img class="float-right" src="../assets/images/error.png" (click)="close()">
+    <img src="../assets/images/group.png"> <h4 style="color:Black;">Create Reporter Form</h4>
+
+  </mdb-card-title>
+
+      <hr class="mb-5 mt-4 pb-3">
+    <!--Text-->
+    <mdb-card-text>
+      <!-- Extended material form grid -->
+<form class="needs-validation" novalidate [formGroup]="createreporterform">
+  <!-- Grid row -->
+  <div class="form-row">
+    <!-- Grid column -->
+    <div class="col-md-6">
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInputDirective type="text" class="form-control" formControlName="Name" id="input1" placeholder="Your Name">
+        <label for="input1">Full Name</label>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInputDirective type="text" class="form-control" formControlName="UserName" id="input2" placeholder="User Name">
+        <label for="input2">User Name</label>
+      </div>
+    </div>
+  </div>
+
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInputDirective type="email" class="form-control" id="inputEmail4MD" formControlName="email" placeholder="Email">
+        <label for="inputEmail4MD">Email</label>
+      </div>
+    <!-- Grid column -->
+
+    <!-- Grid column -->
+
+    <div formGroupName = "Password">
+        <div class="form-row">
+    <div class="col-md-6">
+      <!-- Material input -->
+
+      <div class="md-form form-group">
+        <input mdbInputDirective type="password" class="form-control" id="inputPassword4MD" formControlName="password" placeholder="Password">
+        <label for="inputPassword4MD">Password</label>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInputDirective type="password" class="form-control" id="inputPassword4MD1" formControlName="cpassword" placeholder="Confirm Password">
+        <label for="inputPassword4MD1">Confirm Password</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Grid row -->
+  <div formGroupName="Address">
+  <div class="row">
+    <!-- Grid column -->
+    <div class="col-md-12">
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInputDirective type="text" class="form-control" id="inputAddressMD" formControlName="address1" placeholder="1234 Main St">
+        <label for="inputAddressMD">Address</label>
+      </div>
+    </div>
+    <!-- Grid column -->
+
+    <!-- Grid column -->
+    <div class="col-md-12">
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInputDirective type="text" class="form-control" id="inputAddress2MD" formControlName="street" placeholder="Apartment, studio, or floor">
+        <label for="inputAddress2MD">Street</label>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInputDirective type="text" class="form-control" id="inputAddress3MD" formControlName="city" placeholder="Apartment, studio, or floor">
+        <label for="inputAddress3MD">City</label>
+      </div>
+    </div>
+    <!-- Grid column -->
+  </div>
+  <!-- Grid row -->
+
+  <!-- Grid row -->
+  <div class="form-row">
+    <!-- Grid column -->
+    <div class="col-md-6">
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInputDirective type="text" class="form-control" id="inputCityMD" formControlName="state" placeholder="New York City">
+        <label for="inputCityMD">State</label>
+      </div>
+    </div>
+    <!-- Grid column -->
+
+    <!-- Grid column -->
+    <div class="col-md-6">
+      <!-- Material input -->
+      <div class="md-form form-group">
+        <input mdbInputDirective type="text" class="form-control" id="inputZipMD" formControlName="zipcode" placeholder="11206-1117">
+        <label for="inputZipMD">Zip</label>
+      </div>
+    </div>
+    <!-- Grid column -->
+  </div>
+</div>
+<div class="col-md-12">
+  <!-- Material input -->
+  <div class="md-form form-group">
+    <input mdbInputDirective type="text" class="form-control" id="inputAddress4MD" formControlName="phoneNum" placeholder="Apartment, studio, or floor">
+    <label for="inputAddress3MD">Phone Number</label>
+  </div>
+</div>
+<div class="form-group">
+       <label for="select">Gender</label>
+            <select class="form-control" id="select" (change)="selectGender($event)" required>
+
+              <option *ngFor = "let g of genderList"
+                [value] = "g" > {{g}}
+              </option>
+            </select>
+        </div>
+</form>
+    </mdb-card-text>
+    <div class="text-center">
+    <button mdbBtn  color="blue-grey" class="text-center" outline="true" data-toggle="modal" data-target="#basicExample"mdbWavesEffect (click)="createReporter()">Create</button>
+  </div>
+  </mdb-card-body>
+</mdb-card>
+<div mdbModal #frame="mdbModal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" *ngIf="showSucces" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-success" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Modal Success</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit iusto nulla aperiam blanditiis ad consequatur
+            in dolores culpa, dignissimos, eius non possimus fugiat. Esse ratione fuga, enim, ab officiis totam.</p>
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" mdbBtn color="primary" class="waves-light" mdbWavesEffect>Get it now
+          <i class="fa fa-diamond ml-1"></i>
+        </a>
+        <a type="button" mdbBtn color="primary" outline="true" class="waves-effect" mdbWavesEffect (click)="frame.hide()" data-dismiss="modal">No, thanks</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+    </div>
+    <div class="col-3 col-md-2">
+    </div>
+  </div>
+</div>

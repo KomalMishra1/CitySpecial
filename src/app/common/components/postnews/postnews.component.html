@@ -1,0 +1,129 @@
+<div class="container-fluid" style="height:-webkit-fill-available;">
+  <div class="row">
+    <div class="col-4 col-md-4 ">
+      <nav class="nav flex-column py-4 mb-r pl-3 font-weight-bold z-depth-1">
+        <h5><a class="dark-grey-text font-weight-bold" href="#">View Profile</a></h5>
+        <hr>
+        <a class="nav-link active red-text"  (click)="newsPostedByReporter()">Posted By Me</a>
+        <a class="nav-link mt-4" href="#" routerLink="/postnews" routerLinkActive="active">Upload News</a>
+        <a class="nav-link mt-4" data-toggle="modal" data-target="#basicExample" (click)="frame.show()" mdbWavesEffect>Message to Admin</a>
+          <a class="nav-link mt-4" href="#" (click)="logout()">Logout</a>
+            <!-- <a class="nav-link mt-4" href="#" (click)="entertainment()">Entertainment</a> -->
+      </nav>
+    </div>
+    <div class="col-8 col-md-8 mt-3" style="padding-top:5rem;">
+      <mdb-card>
+  <!--Card image-->
+  <mdb-card-body>
+
+    <!--Title-->
+    <mdb-card-title class="text-center"> <h4>Post a News</h4> </mdb-card-title>
+      <hr class="mb-5 pb-3">
+    <!--Text-->
+    <mdb-card-text>
+      <form class="needs-validation" novalidate [formGroup]="postNewsForm">
+      <div class="md-form mb-5">
+         <i class="fa fa-sticky-note prefix"></i>
+        <input mdbInputDirective data-error="wrong title" formControlName="title" (keypress)="checkNoOfWordsInTitle($event);" data-success="valid title" minLength="8" maxLength="100"
+        type="text" class="form-control" id="form9" name="title" mdbInputDirective>
+        <label for="form9">Type your Title</label>
+      </div>
+
+        <div class="md-form mb-5">
+        <i class="fa fa-pencil prefix"></i>
+          <textarea mdbInputDirective type="text" id="form8" class="md-textarea form-control" formControlName="description" (keypress)="checkNoOfWords($event);" rows="3" ></textarea>
+          <label for="form8">Description in 60 words</label>
+      </div>
+      <div class="md-form mb-5">
+      <i class="fa fa-pencil prefix"></i>
+        <textarea mdbInputDirective type="text" id="form9" class="md-textarea form-control" formControlName="longDescription"  rows="3" ></textarea>
+        <label for="form9"> Long Description</label>
+    </div>
+    <div class="md-form mb-5">
+       <i class="fa fa-sticky-note prefix"></i>
+      <input mdbInputDirective data-error="wrong title" formControlName="newsType"  data-success="valid news Type" minLength="4" maxLength="20"
+      type="text" class="form-control" id="form10" name="type" mdbInputDirective>
+      <label for="form10">Type your News Type</label>
+    </div>
+      <!-- <div class="md-form mb-5">
+        <i class="fa fa-file-image-o prefix"></i>
+        <input mdbInputDirective data-error="wrong password" formControlName="image" data-success="valid password" minLength="10"
+          maxLength="25" type="text" class="form-control" id="form10" name="password">
+          <label for="form10">Enter Image url</label>
+      </div> -->
+      <!-- <input type="file" id="file"  class="form-control-file"  name="file"
+         mutiple ng2FileSelect [uploader]="uploader"/>
+  <label for="file" class="btn-2">Choose File</label> -->
+   <input type="file" id="newsImage" name="newsImage"  class="form-control-file" accept=".jpg , .png"
+   mutiple ng2FileSelect [uploader]="uploader" />
+<label for="newsImage" class="btn-2">Choose File</label>
+  <div class="col-md-12">
+          <div class="row" *ngFor="let item of uploader.queue">
+        <div class="col-md-4 mt-3">
+        {{item.file.name}}
+        </div>
+        <div class="col-md-4 mt-3">
+          <div class="progress">
+          <div class="progress-bar bg-success" role="progressbar" style="width: 25%"
+          [ngStyle]="{'width' : item.progress + '%'}"></div>
+        </div>
+        </div>
+        <div class="col-md-4 float-right">
+          <button type="button" class="btn btn-sm  btn-dark float-right" (click) = "item.upload();">upload</button>
+          <button type="button" class="btn btn-sm btn-info float-right" (click)="item.remove()">Cancel</button>
+        </div>
+  </div>
+  </div>
+  <div class="row" *ngIf="uploader?.queue?.length > 1">
+  <button type="button" class="btn btn-sm  btn-dark float-right" (click)="uploader.uploadAll();">upload All</button>
+  </div>
+  <p *ngIf=showUrl >image url : {{this.postNewsForm.value.imageUrl}}</p>
+      </form>
+    </mdb-card-text>
+    <div class="text-center">
+    <button mdbBtn  color="blue-grey" class="text-center" data-toggle="modal" outline="true" data-target="#basicExample" mdbWavesEffect (click)="submit()">Submit</button>
+  </div>
+  </mdb-card-body>
+</mdb-card>
+<!-- <button type="button" mdbBtn color="primary" rounded="true"  data-toggle="modal" data-target="#basicExample" (click)="frame.show()"
+  mdbWavesEffect>Launch Modal</button> -->
+
+<div mdbModal #frame="mdbModal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" *ngIf="showSuccesModal" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-success" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Modal Success</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit iusto nulla aperiam blanditiis ad consequatur
+            in dolores culpa, dignissimos, eius non possimus fugiat. Esse ratione fuga, enim, ab officiis totam.</p>
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" mdbBtn color="primary" class="waves-light" mdbWavesEffect>Get it now
+          <i class="fa fa-diamond ml-1"></i>
+        </a>
+        <a type="button" mdbBtn color="primary" outline="true" class="waves-effect" mdbWavesEffect (click)="frame.hide()" data-dismiss="modal">No, thanks</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+    </div>
+    <!-- <div class="col-3 col-md-3">
+    </div> -->
+  </div>
+</div>
