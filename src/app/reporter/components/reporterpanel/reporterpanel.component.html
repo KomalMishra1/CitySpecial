@@ -99,6 +99,12 @@
                   <strong>Carine Fox</strong>
               </a>, 19/08/2018</p>
           <a mdbBtn color="success" class="mb-3 waves-light" mdbWavesEffect>Read more</a>
+          <div *ngIf="data.isVerified == true ; then displaycheck else displaycross"></div>
+              <ng-template #displaycheck> <img src = "../assets/images/check.png">Approved</ng-template>
+              <ng-template #displaycross><img src = "../assets/images/cancel.png" data-toggle="modal" data-target="#basicExample">
+                Not Approved
+              </ng-template>
+                    <hr class="mb-5 mt-4 pb-3">
       </div>
       <!--Grid column-->
 

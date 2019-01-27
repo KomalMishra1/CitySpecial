@@ -1,15 +1,6 @@
 <div class="container-fluid" style="height:-webkit-fill-available;">
   <div class="row">
-    <div class="col-4 col-md-4 ">
-      <nav class="nav flex-column py-4 mb-r pl-3 font-weight-bold z-depth-1">
-        <h5><a class="dark-grey-text font-weight-bold" href="#">View Profile</a></h5>
-        <hr>
-        <a class="nav-link active red-text"  (click)="newsPostedByReporter()">Posted By Me</a>
-        <a class="nav-link mt-4" href="#" routerLink="/postnews" routerLinkActive="active">Upload News</a>
-        <a class="nav-link mt-4" data-toggle="modal" data-target="#basicExample" (click)="frame.show()" mdbWavesEffect>Message to Admin</a>
-          <a class="nav-link mt-4" href="#" (click)="logout()">Logout</a>
-            <!-- <a class="nav-link mt-4" href="#" (click)="entertainment()">Entertainment</a> -->
-      </nav>
+    <div class="col-2 col-md-2 ">
     </div>
     <div class="col-8 col-md-8 mt-3" style="padding-top:5rem;">
       <mdb-card>
@@ -77,27 +68,22 @@
   <div class="row" *ngIf="uploader?.queue?.length > 1">
   <button type="button" class="btn btn-sm  btn-dark float-right" (click)="uploader.uploadAll();">upload All</button>
   </div>
-  <p *ngIf=showUrl >image url : {{this.postNewsForm.value.imageUrl}}</p>
-      </form>
-    </mdb-card-text>
-    <div class="text-center">
-    <button mdbBtn  color="blue-grey" class="text-center" data-toggle="modal" outline="true" data-target="#basicExample" mdbWavesEffect (click)="submit()">Submit</button>
+  <p *ngIf=showUrl>image url : {{this.attachmentList[0].imageUrl}}</p>
+  <div class="text-center">
+  <button mdbBtn  color="blue-grey" class="text-center" data-toggle="modal" outline="true" data-target="#basicExample"  (click)="submit()" (click)="frame.show()"  mdbWavesEffect>Submit</button>
   </div>
-  </mdb-card-body>
-</mdb-card>
-<!-- <button type="button" mdbBtn color="primary" rounded="true"  data-toggle="modal" data-target="#basicExample" (click)="frame.show()"
-  mdbWavesEffect>Launch Modal</button> -->
-
-<div mdbModal #frame="mdbModal" class="modal fade" id="basicExample" tabindex="-1" role="dialog" *ngIf="showSuccesModal" aria-labelledby="myModalLabel"
-  aria-hidden="true">
+      </form>
+      <div [hidden]="!showSuccesModal">
+<div mdbModal #frame="mdbModal" class="modal fade" id="frameModalTop" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true" (open)="onOpen($event)">
   <div class="modal-dialog modal-notify modal-success" role="document">
     <!--Content-->
     <div class="modal-content">
       <!--Header-->
       <div class="modal-header">
-        <p class="heading lead">Modal Success</p>
+        <p class="heading lead">Successfully Posted</p>
 
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()" (click)="closePan()">
           <span aria-hidden="true" class="white-text">&times;</span>
         </button>
       </div>
@@ -106,24 +92,77 @@
       <div class="modal-body">
         <div class="text-center">
           <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit iusto nulla aperiam blanditiis ad consequatur
-            in dolores culpa, dignissimos, eius non possimus fugiat. Esse ratione fuga, enim, ab officiis totam.</p>
+          <p>Congratulations !!!!  Your news have been Successfully posted ,You can track the approval process
+          by clicking on track button below .</p>
         </div>
       </div>
 
       <!--Footer-->
       <div class="modal-footer justify-content-center">
-        <a type="button" mdbBtn color="primary" class="waves-light" mdbWavesEffect>Get it now
+        <a type="button" mdbBtn color="primary" class="waves-light" mdbWavesEffect>Track
           <i class="fa fa-diamond ml-1"></i>
         </a>
-        <a type="button" mdbBtn color="primary" outline="true" class="waves-effect" mdbWavesEffect (click)="frame.hide()" data-dismiss="modal">No, thanks</a>
+        <a type="button" mdbBtn color="primary" outline="true" class="waves-effect" mdbWavesEffect (click)="frame.hide()" (click)="closePane()"
+          data-dismiss="modal">Close</a>
       </div>
     </div>
     <!--/.Content-->
   </div>
 </div>
-    </div>
-    <!-- <div class="col-3 col-md-3">
+</div>
+<!---mODAL dANGER sTARTS here !!!!----->
+<!-- <div mdbModal #frame="mdbModal" class="modal fade right" id="frameModalTop" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true" (close)="onClose($event)" [hidden]="!showDangerModal">
+  <div class="modal-dialog modal-notify modal-danger modal-side modal-top-right" role="document">
+    <!--Content-->
+    <!-- <div class="modal-content">
+      <!--Header-->
+      <!-- <div class="modal-header">
+        <p class="heading">Modal Danger</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div> --> -->
+
+      <!--Body-->
+      <!-- <div class="modal-body">
+
+        <div class="row">
+          <div class="col-3">
+            <p></p>
+            <p class="text-center">
+              <i class="fas fa-shopping-cart fa-4x"></i>
+            </p>
+          </div> -->
+
+          <!-- <div class="col-9">
+            <p>Opppsssss !!!! Some error occurred Please try again .</p>
+            <h2>
+              <span class="badge">v52gserrored</span>
+            </h2>
+          </div>
+        </div>
+      </div> -->
+
+      <!--Footer-->
+      <!-- <div class="modal-footer justify-content-center">
+        <a type="button" mdbBtn color="primary" class="waves-effect" mdbWavesEffect>Get it now
+          <i class="far fa-gem ml-1"></i>
+        </a>
+        <a type="button" mdbBtn color="primary" outline="true" class="waves-effect" mdbWavesEffect (click)="frame.hide()"
+          data-dismiss="modal">No, thanks</a>
+      </div>
     </div> -->
+    <!--/.Content-->
+  <!-- </div>
+</div> --> -->
+    </mdb-card-text>
+    <!-- Button trigger modal -->
+  </mdb-card-body>
+</mdb-card>
+    </div>
+    <div class="col-2 col-md-2 ">
+    </div>
   </div>
 </div>

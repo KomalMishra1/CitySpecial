@@ -8,8 +8,8 @@ import 'rxjs';
 import {Subject} from 'rxjs';
 import {Observable} from 'rxjs';
 
-const uri="https://cityspecial.herokuapp.com/api/reporter/uploadImage";
-
+const uri1="https://cityspecial.herokuapp.com/api/reporter/uploadImage";
+const uri2="https://cityspecial.herokuapp.com/api/admin/uploadImage";
 
 @Component({
   selector: 'app-postnews',
@@ -30,35 +30,42 @@ attachmentList : any = [];
 showMessage : boolean =false;
 descriptionArray:any=[];
 showSuccesModal:boolean=false;
+showDangerModal:boolean=false;
 token:any;
+keyType:any;
 showUrl:boolean = false;
 
-uploader : FileUploader = new FileUploader({url : uri , itemAlias : 'newsImage' , authToken : this.token});
+uploader : FileUploader ;
 
-  constructor(private _fileservice : CommonService) {
+  constructor(private _fileservice : CommonService, private _router : Router) {
     if(sessionStorage.length > 0){
         for (let i = 0; i < sessionStorage.length; i++){
           let key = sessionStorage.key(i);
+          this.keyType=key;
           let value = sessionStorage.getItem(key);
           this.getToken(value);
-          console.log(key, value);
           console.log("teoken" , this.token);
           }
+        }
+        if(this.keyType == 'Reporter'){
+          this.uploader = new FileUploader({url : uri1 , itemAlias : 'newsImage' , authToken : this.token});
+        }
+        else {
+          this.uploader = new FileUploader({url : uri2 , itemAlias : 'newsImage' , authToken : this.token});
         }
     this.uploader.authToken = this.token;
     this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
     this.uploader.onCompleteItem = (item : any , response : any , status : any , headers : any) => {
       console.log(this.uploader);
-        console.log('ImageUpload:uploaded:', item, status, response);
            this.attachmentList.push(JSON.parse(response)); //gives response in attachment list array
           console.log(this.attachmentList);
           if(this.attachmentList[0].status == 201 ||  this.attachmentList[0].status == 200){
-            console.log("succesfull Response");
               this.postNewsForm.value.imageUrl=this.attachmentList[0].imageUrl;
               console.log("image url " , this.postNewsForm.value.imageUrl);
               this.showUrl=true;
           }
         }
+
 }
 
   ngOnInit() {
@@ -89,21 +96,51 @@ uploader : FileUploader = new FileUploader({url : uri , itemAlias : 'newsImage' 
 }
 
   submit(){
-      console.log(this.postNewsForm.value);
-      this._fileservice.sendNews(this.postNewsForm.value).
-      subscribe(
-        data => {
-          console.log(data);
-          this.checkSuccess(data);
-        },
-        err => console.log(err));
+    this.postNewsForm.value.imageUrl = this.attachmentList[0].imageUrl;
+      // console.log(this.postNewsForm.value);
+      // console.log("this key type",this.keyType);
+      if(this.keyType == 'Admin'){
+        this._fileservice.sendNewsToAdmin(this.postNewsForm.value , this.token).
+        subscribe(
+          data => {
+            this.checkSuccess(data);
+            // console.log(data);
+
+          },
+          err => console.log(err));
+      }
+      else if(this.keyType == 'Reporter'){
+        this._fileservice.sendNewsToReporter(this.postNewsForm.value , this.token).
+        subscribe(
+          data => {
+            console.log(data);
+            this.checkSuccess(data);
+          },
+          err => console.log(err));
+      }
+
+      else {
+        console.log('Token not recognized');
+      }
+
   }
   checkSuccess(response){
-    if(response.success == 200 || response.success == 201) {
+    if(response.status == 200 || response.status == 201) {
       this.showSuccesModal = true;
       console.log(this.showSuccesModal);
     }
+    else {
+      this.showDangerModal = true;
+    }
   }
+  closePane(){
+    if(this.keyType == "Admin"){
+    this._router.navigate(['/adminpanel']);
+  }
+  if(this.keyType == "Reporter" ){
+      this._router.navigate(['/reporterpanel']);
+  }
+}
   //
   // download(index) {
   // var filename = this.attachmentList[index].uploadname;

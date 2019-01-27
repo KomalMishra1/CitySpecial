@@ -18,6 +18,7 @@ data:any;
     if(sessionStorage.length > 0){
         for (let i = 0; i < sessionStorage.length; i++){
           let key = sessionStorage.key(i);
+          console.log("it is my key",key);
           let value = sessionStorage.getItem(key);
           this.getToken(value);
           console.log(key, value);

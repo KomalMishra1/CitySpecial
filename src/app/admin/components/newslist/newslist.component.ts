@@ -125,8 +125,30 @@ console.log("ndata after splice",this.ndata);
 console.log("data is",this.data);
 }
 
-modifyNewsStatus(value:any){
-  this._service.modifyNewsStatus(value , this.token).
+modifyNewsStatus(value:any, verification:any){
+  console.log(value);
+  console.log(this.token);
+  if(verification == "true")
+  {
+    let j={
+      "verified" : false,
+      "newsId" : value
+    };
+    this._service.modifyNewsStatus(j , this.token).
+    subscribe(
+      data => {
+        this.checkResponse(data);
+        console.log(data);
+      },
+      error => console.log(error)
+    )
+  }
+  else {
+  let j={
+    "verified" : true,
+    "newsId" : value
+  };
+  this._service.modifyNewsStatus(j , this.token).
   subscribe(
     data => {
       this.checkResponse(data);
@@ -135,16 +157,18 @@ modifyNewsStatus(value:any){
     error => console.log(error)
   )
 }
+}
 
 checkResponse(value){
-  if(value.verified == true){
+  if(value.status == 200 || value.status == 201){
     this.showSuccessModal = true;
   }
   else {
     alert("some error occurred")
   }
 }
-
-
+backToAdmin(){
+  this._router.navigate(['/adminpanel']);
+}
 
 }

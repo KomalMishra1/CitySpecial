@@ -56,7 +56,7 @@ loginResponse:any;
       data=> {
           this.loginResponse=data;
           this.checkStatusReporter(this.loginResponse);
-          let key = 'Item 1';
+          let key  = 'Reporter';
           sessionStorage.setItem(key, JSON.stringify(this.loginResponse));
         console.log(data);
 
@@ -80,7 +80,7 @@ loginResponse:any;
       data=> {
         this.loginResponse=data;
         this.checkStatusAdmin(this.loginResponse);
-        let key = 'Item 1';
+        let key = 'Admin';
         sessionStorage.setItem(key, JSON.stringify(this.loginResponse));
         console.log(data);
       },

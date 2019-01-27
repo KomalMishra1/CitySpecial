@@ -35,11 +35,19 @@ loginResponse:any;
   });
   }
 
-  sendNews(body : any){
+  sendNewsToAdmin(body : any , token : any){
+      console.log("inside service" ,  body);
+    return this._http.post('https://cityspecial.herokuapp.com/api/admin/addNews', body, {
+     responseType : 'json',
+     headers:new HttpHeaders().append('Authorization' , token )
+  });
+  }
+
+  sendNewsToReporter(body : any , token:any){
       console.log("inside service" ,  body);
     return this._http.post('https://cityspecial.herokuapp.com/api/reporter/addNews', body, {
      responseType : 'json',
-     headers:new HttpHeaders().append('Authorization' , body )
+     headers:new HttpHeaders().append('Authorization' , token )
   });
   }
 

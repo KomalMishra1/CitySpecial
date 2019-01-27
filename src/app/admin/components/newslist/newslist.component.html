@@ -18,13 +18,15 @@
   <div class="col-10">
 
 <div class="container jumbotron">
+  <img src="../../../../assets/images/back.png" class="float-right mt-2" alt="Sample image for first version of blog listing" (click)="backToAdmin()">
+
   <div class="row mb-5 pt-5"  *ngFor="let data of data">
 
       <!--Grid column-->
       <div class="col-lg-5 col-xl-5 pb-3">
           <!--Featured image-->
           <div class="view overlay rounded z-depth-2 waves-light" mdbWavesEffect>
-              <img src={{data.image}} alt="Sample image for first version of blog listing"
+              <img src="https://images.pexels.com/photos/285814/pexels-photo-285814.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Sample image for first version of blog listing"
                   class="img-fluid">
               <a>
                   <div class="mask rgba-white-slight"></div>
@@ -38,7 +40,7 @@
           <!--Excerpt-->
           <a href="" class="green-text">
               <h6 class="font-weight-bold pb-1">
-                  <i class="fa fa-cutlery"></i> Food</h6>
+                  <i class="fa fa-cutlery"></i>{{data.newsType}}</h6>
           </a>
           <h3 class="mb-4 font-weight-bold dark-grey-text">
               <strong>{{data.title}}</strong>
@@ -50,19 +52,21 @@
               </a>,{{data.createdOn}}</p>
           <a mdbBtn color="success" class="mb-3 waves-light mr-5" mdbWavesEffect>Read more</a>
           <div *ngIf="data.isVerified == true ; then displaycheck else displaycross"></div>
-              <ng-template #displaycheck> <img src = "../assets/images/check.png">Approved</ng-template>
-              <ng-template #displaycross><img src = "../assets/images/cancel.png" (click)="modifyNewsStatus(data._id)" data-toggle="modal" data-target="#basicExample">
+              <ng-template #displaycheck><div class="float-right"> <img  src = "../assets/images/check.png"><p>Approved</p></div>
+              <div>  <img class="float-right mt-2" src = "../assets/images/icon.png" (click)="modifyNewsStatus(data._id,data.isVerified)"><p class="float-right">click here to dissapprove</p></div>
+              </ng-template>
+              <ng-template #displaycross><img src = "../assets/images/cancel.png" (click)="modifyNewsStatus(data._id,data.isVerified)" (click)="frame.show()" data-toggle="modal" data-target="#basicExample">
                 Not Approved Click to approve
                 <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                  *ngIf = "showSuccessModal" aria-hidden="true">
+                  [hidden]="!showSuccessModal" aria-hidden="true">
                   <div class="modal-dialog modal-notify modal-success" role="document">
                     <!--Content-->
                     <div class="modal-content">
                       <!--Header-->
                       <div class="modal-header">
-                        <p class="heading lead">Modal Success</p>
+                        <p class="heading lead">Success</p>
 
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()" (click)="close()">
                           <span aria-hidden="true" class="white-text">&times;</span>
                         </button>
                       </div>
@@ -71,17 +75,16 @@
                       <div class="modal-body">
                         <div class="text-center">
                           <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit iusto nulla aperiam blanditiis ad consequatur
-                            in dolores culpa, dignissimos, eius non possimus fugiat. Esse ratione fuga, enim, ab officiis totam.</p>
+                          <p>News successfully updated</p>
                         </div>
                       </div>
 
                       <!--Footer-->
                       <div class="modal-footer justify-content-center">
-                        <a type="button" mdbBtn color="success" class="waves-effect" mdbWavesEffect>Get it now
+                        <a type="button" mdbBtn color="success" class="waves-effect" (click)="backToAdmin()" mdbWavesEffect>Go to Admin
                           <i class="fa fa-diamond ml-1"></i>
                         </a>
-                        <a type="button" mdbBtn color="success" outline="true" class="waves-effect" mdbWavesEffect (click)="frame.hide()">No, thanks</a>
+                        <a type="button" mdbBtn color="success" outline="true" class="waves-effect" mdbWavesEffect (click)="frame.hide()" (click)="close()">close</a>
                       </div>
                     </div>
                     <!--/.Content-->
@@ -90,6 +93,7 @@
               </ng-template>
 
       </div>
+        <hr class="mb-5 mt-4 pb-3">
       <!--Grid column-->
 
   </div>
